@@ -16,7 +16,10 @@ public class CuttingRodProblem {
 		System.out.println(cutRod(price, n));
 		System.out.println(cutRod(price, n-1, n));
 	}
-
+	/*
+	Time Complexity: O(2^n)
+	Space Complexity: O(n)
+	 */
 	public static int cutRod(int[] price, int n) {
 		if (n == 0)
 			return 0;
@@ -32,6 +35,10 @@ public class CuttingRodProblem {
 	}
 
 	// alternative approach
+	/*
+	Time Complexity: O(2^n)
+	Space Complexity: O(n)
+	 */
 	static int cutRod(int price[], int index, int n) {
         // base case
         if (index == 0) {

@@ -16,6 +16,10 @@ class ContainerWithMostWater {
         System.out.println(maxArea(height));
     }
 
+    /*
+    time complexity: O(n*n)
+    space complexity: O(2n) ~ O(n)
+     */
     public static int maxArea(int[] height) {
         int n = height.length;
         int[] area = new int[n];

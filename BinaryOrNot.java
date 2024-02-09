@@ -23,8 +23,8 @@ class BinaryOrNot{
     public static boolean isBinary(long number){
         boolean result = false;
         while(number != 0) {
-            result = (number % 10 == 0 || number % 10 == 1) ? true : false;
-            if(result == false){
+            result = number % 10 == 0 || number % 10 == 1;
+            if(!result){
                 return false;
             }
             number = number / 10;

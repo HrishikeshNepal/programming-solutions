@@ -36,6 +36,7 @@ public class LongestIncreasingSubsequence {
 			}
 		}
 		System.out.print(array[L.length - 1]);
+		System.out.println();
 	}
 
 	// Recursive approach to find length of LIS

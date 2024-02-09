@@ -13,13 +13,19 @@ Output: false
  */
 public class IsSubsequence {
 	public static void main(String[] args) {
-		String s = "ahbgdc", t = "abc";
+		String s = "abc", t = "ahbgdc";
 		System.out.println(isSubsequence(s, t));
 	}
 
 	public static boolean isSubsequence(String s, String t) {
-		
-		if(s.length() == 0 || t.length() == 0)
+		if(s.equals(t))
+			return true;
+		// making sure s is longer than or equal to t
+		String temp  = s;
+		s = s.length() >= t.length() ? s : t;
+		if(s.equals(t))
+			t = temp;
+		if(s.isEmpty() || t.isEmpty())
 			return false;
 		int m = s.length() - 1;
 		int n = t.length() - 1;

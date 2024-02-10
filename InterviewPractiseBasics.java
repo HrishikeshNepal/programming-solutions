@@ -46,5 +46,19 @@ public class InterviewPractiseBasics {
 		System.out.println("abc".compareTo("abc")); // output: 0
 		System.out.println("acb".compareTo("abc")); // output: 1
 		System.out.println("xyz".compareTo("acb")); // output: 23
+		
+		//regex basics
+		String str = "MyNameIs Hrishikesh Nepal";
+		str = str.strip().replaceAll("\\s", "");
+		System.out.println(str);
+		String[] array = str.split("(?=[A-Z])");
+		for(String element : array)
+			System.out.println(element);
+
+		String str2 = "hello9909";
+		System.out.println(str2.matches("[a-zA-Z0-9]+")); //to check alphanumeric
+		String str3 = "ab[cd]34[ab]";
+		String bracketsPattern = "[\\[\\]]";
+		System.out.println(str3.matches(bracketsPattern));
 	}
 }

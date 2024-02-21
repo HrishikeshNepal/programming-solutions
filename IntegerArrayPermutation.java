@@ -4,6 +4,10 @@ class IntegerArrayPermutation {
         permute(array, 0);
     }
 
+    /*
+     time complexity: O(2^n)
+     space complexity: O(n) - same array of size n can be used
+    */
     public static void permute(int[] array, int j) {
         int n = array.length;
         if (j == n - 1) {

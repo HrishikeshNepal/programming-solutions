@@ -1,128 +1,95 @@
-//import java.math.BigInteger;
-//import java.util.Arrays;
-//
-//class MaxConsecutiveOnes {
-//    public static void main(String[] args) {
-//        int[] array = {1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1};
-//        int m = 4;
-//        int[] arrayWithM1sInBinaryPositions = getBinaryPositionsWithMBitsAs1(array, m);
-//        int totalZeroes = (int) Arrays.stream(array).filter(p -> p == 0).count();
-//        int[] arrayWith0Positions = getArrayWithPositionsHavingValueAs0(array, totalZeroes);
-//        for (int value : arrayWithM1sInBinaryPositions) {
-//            System.out.print(value + " ");
-//        }
-//        System.out.println();
-//        //need to get arrays for 6 different cases
-//        int[] maxLengtsForEachArray = new int[arrayWithM1sInBinaryPositions.length];
-//        for (int i = 0; i < arrayWithM1sInBinaryPositions.length; i++) {
-//            int[] replacedArray = placeM1sInPlaceOf0s(array, arrayWithM1sInBinaryPositions[i]);
-////            for (int value : replacedArray) {
-////                System.out.print(value + " ");
-////            }
-//            System.out.println();
-//            // find longest array with consecutive 1s
-//            maxLengtsForEachArray[i] = longestArrayWithConsecutive1s(replacedArray);
-//            replacedArray = rePlaceM0sInPlaceOf1s(array, arrayWith0Positions);
-//            for (int value : maxLengtsForEachArray) {
-//                System.out.print(value + " ");
-//            }
-//        }
-//        System.out.println();
-//        System.out.println("Maximum length after removal of M zeroes is : " + Arrays.stream(maxLengtsForEachArray).max().getAsInt());
-//    }
-//
-//    public static int[] getBinaryPositionsWithMBitsAs1(int[] array, int m) {
-//        //count total zeroes in original array
-//        int totalZeroes = (int) Arrays.stream(array).filter(p -> p == 0).count();
-//        int opSize = (int) Math.pow(2, totalZeroes);
-//        int[] result = new int[opSize];
-//        int index = 0;
-//        for (int i = 0; i < opSize; i++) {
-//            int count = 0;
-//            for (int j = 0; j < totalZeroes; j++) {
-//                if (BigInteger.valueOf(i).testBit(j)) {
-//                    count++;
-//                }
-//            }
-//            if (count == m) {
-//                result[index] = i;
-//                index++;
-//            }
-//        }
-//        int i = 0;
-//        while (result[i] != 0) {
-//            i++;
-//        }
-//        int[] arrayWithM1sInBinaryPositions = new int[i];
-//        for (int j = 0; j < i; j++) {
-//            arrayWithM1sInBinaryPositions[j] = result[j];
-//            //System.out.print(arrayWithM1sInBinaryPositions[j] + " ");
-//        }
-//        return arrayWithM1sInBinaryPositions;
-//    }
-//
-//    public static int[] placeM1sInPlaceOf0s(int[] array, int value) {
-//        int totalZeroes = (int) Arrays.stream(array).filter(p -> p == 0).count();
-//        for (int j = 0; j < totalZeroes; j++) {
-//            if (BigInteger.valueOf(value).testBit(j)) {
-//                // when j = 2, which means remove 3rd 0 to 1 and j = 3, which is 4rth 0 to 1 in array
-//                // and return array
-//                //remove (j+1)th 0 from array
-//                removeJthElementFromArray(array, j);
-//            }
-//        }
-//        return array;
-//    }
-//
-//    public static int[] rePlaceM0sInPlaceOf1s(int[] array, int[] arrayWith0Positions) {
-//        int j = 0;
-//        for (int i = 0; i<array.length; i++) {
-//            if (i == arrayWith0Positions[j]) {
-//                array[i] = 0;
-//                j++;
-//                if(j == arrayWith0Positions.length)
-//                    break;
-//            }
-//        }
-//        return array;
-//    }
-//
-//    public static void removeJthElementFromArray(int[] array, int j) {
-//        int counter = 0;
-//        for (int i = 0; i < array.length; i++) {
-//            if (array[i] == 0) {
-//                counter++;
-//            }
-//            if (counter == j + 1) {
-//                array[i] = 1;
-//            }
-//        }
-//    }
-//
-//    public static int longestArrayWithConsecutive1s(int[] array) {
-//        int n = array.length;
-//        int[] L = new int[array.length];
-//        int counter = 1;
-//        for (int i = 0; i < n; i++) {
-//            if(array[i] == 0) {
-//                counter = 1;
-//                L[i] = counter;
-//            }
-//            else
-//                L[i] = counter++;
-//        }
-//        return Arrays.stream(L).max().getAsInt();
-//    }
-//
-//    public static int[] getArrayWithPositionsHavingValueAs0(int[] array, int totalZeroes){
-//        int[] result = new int[totalZeroes];
-//        int k = 0;
-//        for(int i = 0; i<array.length; i++){
-//            if(array[i] == 0){
-//                result[k] = i;
-//                k++;
-//            }
-//        }
-//        return result;
-//    }
-//}
+/*
+probably not the ideal solution but it works
+space complexity: O(2n) ~ O(n)
+time complexity: worst case O(2^n * k)
+*/
+
+import java.math.BigInteger;
+import java.util.Arrays;
+
+class MaximumConsecutiveOnes {
+    public static void main(String[] args) {
+        int[] nums = {0,0,0,1};
+        int k = 4;
+        //System.out.println(getMaxConsecutive1sFromNums(nums));
+        System.out.println(longestOnes(nums, k));
+
+    }
+
+    /*
+    Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
+    Output: 6
+     */
+    public static int longestOnes(int[] nums, int k) {
+
+        //count number of 0s in nums
+        int count = (int) Arrays.stream(nums).filter(p -> p == 0).count();
+        k = Math.min(k, count);
+
+        // get a new positions array from nums which contains positions in nums where element is 0
+        int[] positions = new int[count];
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                positions[j] = i;
+                j++;
+            }
+        }
+
+        // flip 0s in nums in positions where the binary values is 1s
+        int result = flip0s(nums, positions, count, k);
+        return result;
+
+    }
+
+    public static int flip0s(int[] nums, int[] positions, int count, int k) {
+        int counter = 0;
+        int result = 0;
+        double opSize = Math.pow(2, count);
+        for(int i = 1; i<opSize; i++){
+            for(int j = 0; j<count; j++) {
+                if (BigInteger.valueOf(i).testBit(j)){
+                    counter ++;
+                }
+            }
+            if(counter == k){
+                for(int j = 0; j<count; j++) {
+                    if (BigInteger.valueOf(i).testBit(j)){
+                        nums[positions[j]] = 1;
+                    }
+                }
+            }
+            // get max consecutive 1s from nums
+            result  = Math.max(result, getMaxConsecutive1sFromNums(nums));
+            // revert to original nums
+            if(counter == k){
+                for(int j = 0; j<count; j++) {
+                    if (BigInteger.valueOf(i).testBit(j)){
+                        nums[positions[j]] = 0;
+                    }
+                }
+            }
+            counter = 0;
+
+        }
+        return result;
+    }
+
+    public static int getMaxConsecutive1sFromNums(int[] nums){
+        int i = 0;
+        int max = 0;
+        int temp = 0;
+        while(i != nums.length){
+            if(nums[i] == 1){
+                temp ++;
+                i++;
+            } else {
+                i++;
+                max = Math.max(temp, max);
+                temp = 0;
+            }
+            max = Math.max(temp, max);
+        }
+        return max;
+    }
+}
